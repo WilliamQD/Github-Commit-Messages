@@ -8,3 +8,119 @@ output:
 ---
 
 This is my JSC370 Final Project website.
+
+```{r setup, message=FALSE,echo = FALSE, warning=FALSE}
+library(data.table)
+library(tidyverse)
+library(dplyr)
+library(plotly)
+library(DT)
+library(knitr)
+# Initialize code chunk options
+opts_chunk$set(
+  warning = FALSE,
+  message = FALSE,
+  eval=TRUE,
+  echo = TRUE,
+  cache = FALSE,
+  fig.width = 7, 
+  fig.align = 'center',
+  fig.asp = 0.618,
+  out.width = "700px",
+  class.source = "code-r")
+```
+
+## First step
+
+First I will source any necessary code, e.g. `process_covid_data.R`:
+
+```{r load-data}
+source("process_COVID_data.R")
+```
+
+```{r}
+p1_scatter <- cv_states_today %>% 
+  plot_ly(x = ~pop_density, y = ~deathsper100k,
+          type = 'scatter', mode = 'markers', color = ~state,
+          size = ~population, sizes = c(5, 70), marker = list(sizemode='diameter', opacity=0.5),
+          hoverinfo = 'text',
+          text = ~paste( paste(state, ":", sep=""), paste(" Cases per 100k: ", per100k, sep="") , paste(" Deaths per 100k: ",
+                        deathsper100k, sep=""), sep = "<br>")) %>%
+  layout(title = "Population-normalized COVID-19 deaths vs. population density",
+                  yaxis = list(title = "Deaths per 100k"), xaxis = list(title = "Population Density"),
+         hovermode = "compare")
+
+# filter out "District of Columbia"
+cv_states_today_scatter <- cv_states_today %>% filter(state!="District of Columbia")
+
+p2_scatter <- cv_states_today_scatter %>% 
+  plot_ly(x = ~pop_density, y = ~deathsper100k,
+          type = 'scatter', mode = 'markers', color = ~state,
+          size = ~population, sizes = c(5, 70), marker = list(sizemode='diameter', opacity=0.5),
+          hoverinfo = 'text',
+          text = ~paste( paste(state, ":", sep=""), paste(" Cases per 100k: ", per100k, sep="") , paste(" Deaths per 100k: ",
+                        deathsper100k, sep=""), sep = "<br>")) %>%
+  layout(title = "Population-normalized COVID-19 deaths vs. population density",
+                  yaxis = list(title = "Deaths per 100k"), xaxis = list(title = "Population Density"),
+         hovermode = "compare")
+```
+
+```{r}
+cfr_geo <- plot_geo(cv_states_today, 
+         locationmode = "USA-states") %>% 
+  add_trace(
+    z = ~naive_CFR,
+    locations = ~abb
+  ) %>% 
+  layout(
+    geo = list(
+      scope = "usa",
+      showlakes = TRUE,
+      lakecolor = toRGB("red")
+    )
+  )
+```
+```{r}
+head(cv_states)
+```
+
+```{r}
+cv_states_mat <- cv_states %>%  select(state, date, new_cases) %>% 
+  pivot_wider(names_from = state, values_from = new_cases) %>% 
+  column_to_rownames("date")
+heatmap_states <- cv_states_mat %>% 
+  plot_ly(
+    x = rownames(cv_states_mat),
+    y = colnames(cv_states_mat),
+    z = ~as.matrix(cv_states_mat),
+    type = "heatmap",
+    showscale = TRUE
+  )
+```
+
+
+## Showcasing plots {.tabset}
+
+### Figure 1
+
+```{r echo=FALSE}
+p1_scatter
+```
+
+### Figure 2
+
+```{r echo=FALSE}
+p2_scatter
+```
+
+### Figure 3
+```{r echo=FALSE}
+cfr_geo
+```
+
+### Figure 4
+```{r echo=FALSE}
+heatmap_states
+```
+
+{-}
