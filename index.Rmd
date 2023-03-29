@@ -80,9 +80,6 @@ cfr_geo <- plot_geo(cv_states_today,
     )
   )
 ```
-```{r}
-head(cv_states)
-```
 
 ```{r}
 cv_states_mat <- cv_states %>%  select(state, date, new_cases) %>% 
