@@ -1,0 +1,14 @@
+name: "my-website"
+output_dir: "."
+navbar:
+  title: "My Website for JSC370"
+  left:
+    - text: "Home"
+      href: index.html
+  right:
+    - icon: fal fa-code-merge
+    - text: "My Github page"
+      href: https://github.com/WilliamQD
+output:
+  html_document:
+    theme: cosmo
