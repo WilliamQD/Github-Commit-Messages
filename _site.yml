@@ -1,10 +1,12 @@
 name: "my-website"
 output_dir: "."
 navbar:
-  title: "My Website for JSC370"
+  title: "My Website for JSC370's Final Project"
   left:
-    - text: "Home"
+    - text: "Home - Interactive plots"
       href: index.html
+    - text: "Animated plots"
+      href: animatedplots.html
   right:
     - icon: fal fa-code-merge
     - text: "My Github page"

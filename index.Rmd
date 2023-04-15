@@ -30,94 +30,72 @@ opts_chunk$set(
   class.source = "code-r")
 ```
 
-## First step
 
-First I will source any necessary code, e.g. `process_covid_data.R`:
-
-```{r load-data}
-source("process_COVID_data.R")
+```{r load-data, include=FALSE}
+start_time <- Sys.time()
+source("process_project_data.R")
+end_time <- Sys.time()
+end_time - start_time
 ```
 
-```{r}
-p1_scatter <- cv_states_today %>% 
-  plot_ly(x = ~pop_density, y = ~deathsper100k,
-          type = 'scatter', mode = 'markers', color = ~state,
-          size = ~population, sizes = c(5, 70), marker = list(sizemode='diameter', opacity=0.5),
-          hoverinfo = 'text',
-          text = ~paste( paste(state, ":", sep=""), paste(" Cases per 100k: ", per100k, sep="") , paste(" Deaths per 100k: ",
-                        deathsper100k, sep=""), sep = "<br>")) %>%
-  layout(title = "Population-normalized COVID-19 deaths vs. population density",
-                  yaxis = list(title = "Deaths per 100k"), xaxis = list(title = "Population Density"),
-         hovermode = "compare")
-
-# filter out "District of Columbia"
-cv_states_today_scatter <- cv_states_today %>% filter(state!="District of Columbia")
-
-p2_scatter <- cv_states_today_scatter %>% 
-  plot_ly(x = ~pop_density, y = ~deathsper100k,
-          type = 'scatter', mode = 'markers', color = ~state,
-          size = ~population, sizes = c(5, 70), marker = list(sizemode='diameter', opacity=0.5),
-          hoverinfo = 'text',
-          text = ~paste( paste(state, ":", sep=""), paste(" Cases per 100k: ", per100k, sep="") , paste(" Deaths per 100k: ",
-                        deathsper100k, sep=""), sep = "<br>")) %>%
-  layout(title = "Population-normalized COVID-19 deaths vs. population density",
-                  yaxis = list(title = "Deaths per 100k"), xaxis = list(title = "Population Density"),
-         hovermode = "compare")
+```{r,echo=FALSE}
+num_commits_plot <- msg_time %>% group_by(repo, year) %>% summarize(count = n()) %>% 
+  ggplot(aes(x = year, y=count, color=repo)) + 
+  geom_point() +
+  geom_line() +
+  theme(legend.spacing.x  = unit(0.01, "cm")) +
+  theme_ipsum() +
+  theme(legend.text = element_text(size = 6, face = "bold"),
+        legend.position = "top", 
+        legend.key.height = unit(0.1, "cm"),
+        legend.key.width = unit(0.2, "cm")) +
+  ggtitle("Number of commits of most popular repos on Github over years")
+p1 <- ggplotly(num_commits_plot)
+```
+```{r,echo=FALSE}
+dow_plot <- msg_time %>% group_by(repo, day_of_week) %>% 
+  ggplot(aes(x = day_of_week, fill=repo)) + 
+  geom_bar() +
+  theme(legend.spacing.x  = unit(0.01, "cm")) +
+  theme_ipsum() +
+  theme(legend.text = element_text(size = 6, face = "bold"),
+        legend.position = "top", 
+        legend.key.height = unit(0.1, "cm"),
+        legend.key.width = unit(0.2, "cm")) +
+  ggtitle("Number of commits for each Day of Week")
+p2 <- ggplotly(dow_plot)
+```
+```{r,echo=FALSE}
+tokens_count_graph <-  msg_tokens %>% 
+  top_n(20, n) %>% 
+  ggplot(aes(n, fct_reorder(tokens, n))) + 
+  geom_col(aes(fill = tokens)) + 
+  scale_colour_brewer(palette = "Spectral") +
+  labs(y = "Tokens", x = "count") +
+  guides(fill = "none") +
+  ggtitle("Top 20 most frequent tokens in commit messages across all repos")
+p3 <- ggplotly(tokens_count_graph)
 ```
 
-```{r}
-cfr_geo <- plot_geo(cv_states_today, 
-         locationmode = "USA-states") %>% 
-  add_trace(
-    z = ~naive_CFR,
-    locations = ~abb
-  ) %>% 
-  layout(
-    geo = list(
-      scope = "usa",
-      showlakes = TRUE,
-      lakecolor = toRGB("red")
-    )
-  )
-```
-
-```{r}
-cv_states_mat <- cv_states %>%  select(state, date, new_cases) %>% 
-  pivot_wider(names_from = state, values_from = new_cases) %>% 
-  column_to_rownames("date")
-heatmap_states <- cv_states_mat %>% 
-  plot_ly(
-    x = rownames(cv_states_mat),
-    y = colnames(cv_states_mat),
-    z = ~as.matrix(cv_states_mat),
-    type = "heatmap",
-    showscale = TRUE
-  )
-```
-
-
-## Showcasing plots {.tabset}
+## Below are interactive plots for Assignment 5 {.tabset}
 
 ### Figure 1
 
 ```{r echo=FALSE}
-p1_scatter
+p1
 ```
 
 ### Figure 2
 
 ```{r echo=FALSE}
-p2_scatter
+p2
 ```
 
 ### Figure 3
 ```{r echo=FALSE}
-cfr_geo
+p3
 ```
 
-### Figure 4
-```{r echo=FALSE}
-heatmap_states
-```
+## {-}
 
-{-}
+You can also check the "Animated plots" tab for animated plots I created.
