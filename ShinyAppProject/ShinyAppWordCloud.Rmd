@@ -49,7 +49,7 @@ server <- function(input, output) {
       endpoint <- paste0(endpoint, '/repos')
       
       # Set Github personal access token
-      token <- "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"
+      token <- "" # PUT YOUR OWN
   
       # Make GET request to API endpoint
       response <- GET(endpoint, add_headers("Authorization" = paste0("token ", token)))
