@@ -15,3 +15,4 @@ To use the app, simply input the Github user's name, then depending on how many 
 <iframe height="1200" width="1000" frameborder="no" src="https://6rcq7y-williamqd.shinyapps.io/ShinyAppWordCloud/"> </iframe>
 
 The shiny app is hosted on https://6rcq7y-williamqd.shinyapps.io/ShinyAppWordCloud/
+The code for producing the shiny app is under the folder shinyAppProject
