@@ -1,6 +1,8 @@
 ---
 output:
   html_document:
+    toc: TRUE
+    toc_float: TRUE 
     theme: cosmo
     highlight: pygments
 ---
@@ -18,10 +20,7 @@ opts_chunk$set(
   eval=TRUE,
   echo = FALSE,
   cache = FALSE,
-  fig.width = 7, 
   fig.align = 'center',
-  fig.asp = 0.618,
-  out.width = "700px",
   class.source = "code-r")
 ```
 
@@ -71,6 +70,21 @@ tokens_count_graph <-  msg_tokens %>%
   ggtitle("Top 20 most frequent tokens in commit messages across all repos")
 p3 <- ggplotly(tokens_count_graph)
 ```
+```{r}
+num_commits_plot2 <- msg_time %>% filter(year > 2007 | (year == 2007 & month %in% c("Oct", "Nov", "Dec"))) %>% group_by(repo, year) %>% summarize(count = n()) %>% 
+  ggplot(aes(x = year, y=count, color=repo)) + 
+  geom_point() +
+  geom_line() +
+  theme(legend.spacing.x  = unit(0.01, "cm")) +
+  theme_ipsum() +
+  theme(legend.text = element_text(size = 6, face = "bold"),
+        legend.position = "top", 
+        legend.key.height = unit(0.1, "cm"),
+        legend.key.width = unit(0.2, "cm")) +
+  ggtitle("Number of commits of most popular repos since Github Development")
+p4 <- ggplotly(num_commits_plot2)
+```
+
 ## Interactive tables of the raw/processed datasets{.tabset}
 
 Below we showcasing some important dataframes that are used throughout of this project and that are hard to fit in the report, this includes (1) both raw datasets, (2) Cleaned `personal` dataset (3) Processed datasets for time series and natural language processing.
@@ -177,25 +191,31 @@ formatStyle(
 ## {-}
 
 
-## Below are interactive plots for Assignment 5 {.tabset}
+## Interactive plots{.tabset}
 
-### Figure 1
+Below are interactive plots created for visualization and analysis. The first three are based on some kind of time variable, such that we analyze how number of commits changes or behaviors as time changes. The last one is simply a count of most popular token in the commit messages. For a more informative visualization of the language part, I encourage to check the animated wordcloud or the report itself.
+
+### Number of Commits starting 1970
 
 ```{r echo=FALSE}
 p1
 ```
 
-### Figure 2
+### Number of Commits starting Oct 2007
+
+```{r}
+p4
+```
+
+### Commits in each Day of Week
 
 ```{r echo=FALSE}
 p2
 ```
 
-### Figure 3
+### Most Frequent Tokens
 ```{r echo=FALSE}
 p3
 ```
 
 ## {-}
-
-You can also check the "Animated plots" tab for animated plots I created.

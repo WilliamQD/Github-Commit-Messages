@@ -9,6 +9,8 @@ navbar:
       href: interactiveplots.html
     - text: "Animated visualizations"
       href: animatedplots.html
+    - text: "Any User Wordcloud"
+      href: shinyApp.html
   right:
     - icon: fal fa-code-merge
     - text: "My Github page"

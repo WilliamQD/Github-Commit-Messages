@@ -30,7 +30,7 @@ In short, our project seeks to answer a simple question: What and when do people
 
 ### Project Guides
 
-To access the report, either go to the folder `report` or [click on this link]().
+To access the report, either go to the folder `report` or [click on this link](https://github.com/WilliamQD/JSC370-Website/blob/master/Report/Report.pdf).
 
 To access the data, go to the folder `data` and read the instruction there.
 
