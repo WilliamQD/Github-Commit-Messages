@@ -1,4 +1,4 @@
-## JSC370 Final Project
+## JSC370 Final Project - Github Commit Messages
 
 This is part of my JSC370 Final Project, where it consists a website displaying the interactive figures and tables, and a complete report descring my work on analyzing Github commit messages using Time Series and Natural Language Processing.
 
