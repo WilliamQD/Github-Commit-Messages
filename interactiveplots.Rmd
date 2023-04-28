@@ -1,0 +1,97 @@
+---
+output:
+  html_document:
+    theme: cosmo
+    highlight: pygments
+---
+Below are interactive plots for the project.
+```{r setup, message=FALSE,echo = FALSE, warning=FALSE}
+library(data.table)
+library(tidyverse)
+library(dplyr)
+library(plotly)
+library(DT)
+library(knitr)
+# Initialize code chunk options
+opts_chunk$set(
+  warning = FALSE,
+  message = FALSE,
+  eval=TRUE,
+  echo = TRUE,
+  cache = FALSE,
+  fig.width = 7, 
+  fig.align = 'center',
+  fig.asp = 0.618,
+  out.width = "700px",
+  class.source = "code-r")
+```
+
+
+```{r load-data, include=FALSE}
+start_time <- Sys.time()
+source("process_project_data.R")
+end_time <- Sys.time()
+end_time - start_time
+```
+
+```{r,echo=FALSE}
+num_commits_plot <- msg_time %>% group_by(repo, year) %>% summarize(count = n()) %>% 
+  ggplot(aes(x = year, y=count, color=repo)) + 
+  geom_point() +
+  geom_line() +
+  theme(legend.spacing.x  = unit(0.01, "cm")) +
+  theme_ipsum() +
+  theme(legend.text = element_text(size = 6, face = "bold"),
+        legend.position = "top", 
+        legend.key.height = unit(0.1, "cm"),
+        legend.key.width = unit(0.2, "cm")) +
+  ggtitle("Number of commits of most popular repos on Github over years")
+p1 <- ggplotly(num_commits_plot)
+```
+```{r,echo=FALSE}
+dow_plot <- msg_time %>% group_by(repo, day_of_week) %>% 
+  ggplot(aes(x = day_of_week, fill=repo)) + 
+  geom_bar() +
+  theme(legend.spacing.x  = unit(0.01, "cm")) +
+  theme_ipsum() +
+  theme(legend.text = element_text(size = 6, face = "bold"),
+        legend.position = "top", 
+        legend.key.height = unit(0.1, "cm"),
+        legend.key.width = unit(0.2, "cm")) +
+  ggtitle("Number of commits for each Day of Week")
+p2 <- ggplotly(dow_plot)
+```
+```{r,echo=FALSE}
+tokens_count_graph <-  msg_tokens %>% 
+  top_n(20, n) %>% 
+  ggplot(aes(n, fct_reorder(tokens, n))) + 
+  geom_col(aes(fill = tokens)) + 
+  scale_colour_brewer(palette = "Spectral") +
+  labs(y = "Tokens", x = "count") +
+  guides(fill = "none") +
+  ggtitle("Top 20 most frequent tokens in commit messages across all repos")
+p3 <- ggplotly(tokens_count_graph)
+```
+
+## Below are interactive plots for Assignment 5 {.tabset}
+
+### Figure 1
+
+```{r echo=FALSE}
+p1
+```
+
+### Figure 2
+
+```{r echo=FALSE}
+p2
+```
+
+### Figure 3
+```{r echo=FALSE}
+p3
+```
+
+## {-}
+
+You can also check the "Animated plots" tab for animated plots I created.

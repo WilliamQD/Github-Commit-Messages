@@ -1,8 +1,8 @@
 ---
-output: 
-    html_document:
-        toc: TRUE
-        toc_float: TRUE
+output:
+  html_document:
+    theme: cosmo
+    highlight: pygments
 ---
 ```{r setup, message=FALSE,echo = FALSE, warning=FALSE}
 library(data.table)

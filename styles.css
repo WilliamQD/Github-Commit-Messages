@@ -1,0 +1,10 @@
+.navbar {
+  background: linear-gradient(-45deg, red, violet, indigo, blue);
+}
+
+.navbar-nav .active > a,
+.navbar-nav .active > a:focus,
+.navbar-nav .active > a:hover {
+    background-color: transparent;
+    opacity: 70%;
+}

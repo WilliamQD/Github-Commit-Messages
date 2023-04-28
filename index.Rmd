@@ -1,101 +1,36 @@
 ---
-title: "JSC370 Final Project"
+title: "Analyzing GitHub Commit Patterns: A Time Series and Natural Language Processing Approach"
+date: "April 27, 2023"
 author: "William Zhang"
-output: 
-    html_document:
-        toc: TRUE
-        toc_float: TRUE
+output:
+  html_document:
+    theme: cosmo
+    highlight: pygments
 ---
-
-This is my JSC370 Final Project website.
-
-```{r setup, message=FALSE,echo = FALSE, warning=FALSE}
-library(data.table)
-library(tidyverse)
-library(dplyr)
-library(plotly)
-library(DT)
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(eval = T, echo  = F, include = F, warning = F)
+```
+```{r}
 library(knitr)
-# Initialize code chunk options
-opts_chunk$set(
-  warning = FALSE,
-  message = FALSE,
-  eval=TRUE,
-  echo = TRUE,
-  cache = FALSE,
-  fig.width = 7, 
-  fig.align = 'center',
-  fig.asp = 0.618,
-  out.width = "700px",
-  class.source = "code-r")
+library(kableExtra)
 ```
 
 
-```{r load-data, include=FALSE}
-start_time <- Sys.time()
-source("process_project_data.R")
-end_time <- Sys.time()
-end_time - start_time
-```
+## Project Introduction
 
-```{r,echo=FALSE}
-num_commits_plot <- msg_time %>% group_by(repo, year) %>% summarize(count = n()) %>% 
-  ggplot(aes(x = year, y=count, color=repo)) + 
-  geom_point() +
-  geom_line() +
-  theme(legend.spacing.x  = unit(0.01, "cm")) +
-  theme_ipsum() +
-  theme(legend.text = element_text(size = 6, face = "bold"),
-        legend.position = "top", 
-        legend.key.height = unit(0.1, "cm"),
-        legend.key.width = unit(0.2, "cm")) +
-  ggtitle("Number of commits of most popular repos on Github over years")
-p1 <- ggplotly(num_commits_plot)
-```
-```{r,echo=FALSE}
-dow_plot <- msg_time %>% group_by(repo, day_of_week) %>% 
-  ggplot(aes(x = day_of_week, fill=repo)) + 
-  geom_bar() +
-  theme(legend.spacing.x  = unit(0.01, "cm")) +
-  theme_ipsum() +
-  theme(legend.text = element_text(size = 6, face = "bold"),
-        legend.position = "top", 
-        legend.key.height = unit(0.1, "cm"),
-        legend.key.width = unit(0.2, "cm")) +
-  ggtitle("Number of commits for each Day of Week")
-p2 <- ggplotly(dow_plot)
-```
-```{r,echo=FALSE}
-tokens_count_graph <-  msg_tokens %>% 
-  top_n(20, n) %>% 
-  ggplot(aes(n, fct_reorder(tokens, n))) + 
-  geom_col(aes(fill = tokens)) + 
-  scale_colour_brewer(palette = "Spectral") +
-  labs(y = "Tokens", x = "count") +
-  guides(fill = "none") +
-  ggtitle("Top 20 most frequent tokens in commit messages across all repos")
-p3 <- ggplotly(tokens_count_graph)
-```
+The increasing popularity and practice of collaborative software development has led to a burst of open-source repositories on [GitHub](https://github.com/), which is an internet hosting service for software development and version control using Git. Many state-of-art technology and open-source projects are hosted on Github, notable ones include Python, Linux, chromium, and more. It is with no exaggeration to say that the success of the programming community now lies heavily on the success of Github. Furthermore, being able to use Github and understanding the concept of version control is classified as an important skill for most programmers nowadays.
 
-## Below are interactive plots for Assignment 5 {.tabset}
+One interesting aspect of version control is the commit messages that developers leave when making changes to the code. These messages document the changes made and why they were made. A well-written commit message can provide insight into the evolution of code over time and can be analyzed to understand the development process and contributors' behavior.
 
-### Figure 1
+In this project, we aims to study the behavior and patterns of commit messages available on GitHub, consisting of two parts. The first part will analyze the overall trends and patterns of commit messages by examining the 20 most popular repositories on GitHub. This part will include key variables, such as the time of the commit, the repository committed to, and most importantly, the actual commit message in string format. This part's objective is to establish a baseline for commit message behavior.
 
-```{r echo=FALSE}
-p1
-```
+The second part of the project will involve a more focused analysis on specific individuals. We will manually scrape all repositories of a selected individual using the GitHub API and analyze their commit messages using similar methods in part 1. The objective of this part is to compare the selected individual's commit messages to the overall trends and patterns found in part 1, providing insights into individual development practices and potential differences and similarities in commit message behavior between individuals and the wider programming community. We also aim to add more engagement to the project by analyzing interesting individuals, such as friends and colleagues.
 
-### Figure 2
+In short, our project seeks to answer a simple question: What and when do people write in commit messages? By examining GitHub's most popular repositories and specific individuals' commit messages, we hope to gain a deeper understanding of commit message behavior and its impact on the programming community.
 
-```{r echo=FALSE}
-p2
-```
+### Project Guides
 
-### Figure 3
-```{r echo=FALSE}
-p3
-```
+To access the report, 
 
-## {-}
+To access the data, 
 
-You can also check the "Animated plots" tab for animated plots I created.

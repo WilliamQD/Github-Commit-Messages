@@ -1,11 +1,13 @@
 name: "my-website"
 output_dir: "."
 navbar:
-  title: "My Website for JSC370's Final Project"
+  title: "JSC370 Final Project"
   left:
-    - text: "Home - Interactive plots"
+    - text: "Home"
       href: index.html
-    - text: "Animated plots"
+    - text: "Interactive Visualizations"
+      href: Interactiveplots.html
+    - text: "Animated visualizations"
       href: animatedplots.html
   right:
     - icon: fal fa-code-merge
@@ -14,3 +16,5 @@ navbar:
 output:
   html_document:
     theme: cosmo
+    highlight: pygments
+    css: styles.css
