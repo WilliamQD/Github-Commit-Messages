@@ -1,0 +1,17 @@
+---
+output: 
+  html_document:
+    theme: cosmo
+    highlight: pygments
+---
+
+# Any User Wordcloud!
+
+Below is a shiny app that allows the user to input any *user*'s name (not repository), for example 'JSC370', or 'WilliamQD', then it will generate a wordcloud showing the most used tokens in their commit messages across all their repositories. **Note that if the user name doesn't exist, then error will show up, similarly, at the start of the app, an error shows, which is expected since the input field is empty (thus can be safely ignored).**
+
+To use the app, simply input the Github user's name, then depending on how many repos / commits that user has, it will take some time, at last a wordcloud will show up. (*Be patient!*)
+
+
+<iframe height="1200" width="1000" frameborder="no" src="https://6rcq7y-williamqd.shinyapps.io/ShinyAppWordCloud/"> </iframe>
+
+The shiny app is hosted on https://6rcq7y-williamqd.shinyapps.io/ShinyAppWordCloud/
