@@ -1,6 +1,6 @@
 ## JSC370 Final Project
 
-This is part of my JSC370 Final Project, where it consists a website displaying the interactive findings, and a complete report descring my work on analyzing Github commit messages using Time Series and Natural Language Processing.
+This is part of my JSC370 Final Project, where it consists a website displaying the interactive figures and tables, and a complete report descring my work on analyzing Github commit messages using Time Series and Natural Language Processing.
 
 The report is contained in the Report directory. The website is online at https://williamqd.github.io/JSC370-Website/
 
