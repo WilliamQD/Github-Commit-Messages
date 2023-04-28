@@ -110,7 +110,7 @@ library(jsonlite)
 endpoint <- "https://api.github.com/users/WilliamQD/repos"
 
 # Set Github personal access token
-token <- "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"
+token <- "" # PUT YOUR OWN!
 
 # Make GET request to API endpoint
 response <- GET(endpoint, add_headers("Authorization" = paste0("token ", token)))
@@ -178,7 +178,7 @@ word_cloud_mine <- commit_tokens %>%
 endpoint <- "https://api.github.com/users/Yuanxyyds/repos"
 
 # Set Github personal access token
-token <- "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"
+token <- "" # PUT YOUR OWN!
 
 # Make GET request to API endpoint
 response <- GET(endpoint, add_headers("Authorization" = paste0("token ", token)))
@@ -242,7 +242,7 @@ wordcloud_stev <- commit_stev_tokens %>%
 endpoint <- "https://api.github.com/users/JSC370/repos"
 
 # Set Github personal access token
-token <- "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"
+token <- "" # PUT YOUR OWN!
 
 # Make GET request to API endpoint
 response <- GET(endpoint, add_headers("Authorization" = paste0("token ", token)))
