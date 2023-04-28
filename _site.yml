@@ -6,7 +6,7 @@ navbar:
     - text: "Home"
       href: index.html
     - text: "Interactive Visualizations"
-      href: Interactiveplots.html
+      href: interactiveplots.html
     - text: "Animated visualizations"
       href: animatedplots.html
   right:

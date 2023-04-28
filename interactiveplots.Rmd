@@ -4,7 +4,6 @@ output:
     theme: cosmo
     highlight: pygments
 ---
-Below are interactive plots for the project.
 ```{r setup, message=FALSE,echo = FALSE, warning=FALSE}
 library(data.table)
 library(tidyverse)
@@ -17,7 +16,7 @@ opts_chunk$set(
   warning = FALSE,
   message = FALSE,
   eval=TRUE,
-  echo = TRUE,
+  echo = FALSE,
   cache = FALSE,
   fig.width = 7, 
   fig.align = 'center',
@@ -72,6 +71,111 @@ tokens_count_graph <-  msg_tokens %>%
   ggtitle("Top 20 most frequent tokens in commit messages across all repos")
 p3 <- ggplotly(tokens_count_graph)
 ```
+## Interactive tables of the raw/processed datasets{.tabset}
+
+Below we showcasing some important dataframes that are used throughout of this project and that are hard to fit in the report, this includes (1) both raw datasets, (2) Cleaned `personal` dataset (3) Processed datasets for time series and natural language processing.
+
+### Raw Commit Message
+
+```{r, include=TRUE}
+# Head the first 7 rows
+datatable(
+  head(com_msg, 7), 
+  options = list(
+    scrollX = TRUE, 
+    scrollY = FALSE,
+    paging = FALSE,
+    dom = 't'
+  ),
+  rownames = FALSE,
+  caption = "Table 1 - Top 7 rows of the raw dataset commit messages"
+) %>%
+formatStyle(
+  columns = 1:5,
+  border = "1px solid black"
+)
+```
+
+### Raw `WilliamQD` repository data
+
+```{r, include=TRUE}
+datatable(
+  head(commit_df, 30), 
+  options = list(
+    pageLength = 10,
+    lengthMenu = c(10, 20, 30)
+  ),
+  rownames = FALSE,
+  caption = "Table 2 - Top 30 rows of the raw dataset scraped from Github under the account WilliamQD"
+) %>%
+formatStyle(
+  columns = 1:4,
+  border = "1px solid black"
+)
+```
+
+### Cleaned `WilliamQD` repository data
+
+```{r, include=TRUE}
+datatable(
+  head(commit_df_clean, 30), 
+  options = list(
+    scroll.X = TRUE,
+    scroll.Y = FALSE,
+    paging = TRUE,
+    pageLength = 10,
+    lengthMenu = c(10, 20, 30)
+  ),
+  rownames = FALSE,
+  caption = "Table 3 - Top 30 rows of cleaned dataset of commit messages from account WilliamQD"
+) %>%
+formatStyle(
+  columns = 1:4,
+  border = "1px solid black"
+)
+```
+
+### Dataframe modefied for Time series 
+```{r, include=TRUE}
+datatable(
+  head(msg_time, 5), 
+  options = list(
+    scroll.X = TRUE,
+    scroll.Y = FALSE,
+    paging = FALSE
+  ),
+  rownames = FALSE,
+  caption = "Table 4 - Top 5 rows of the commit message dataset with time variables"
+) %>%
+formatStyle(
+  columns = 1:7,
+  border = "1px solid black"
+)
+```
+
+### Tokenized Commit Message
+
+```{r, include=TRUE}
+datatable(
+  head(msg_token_byrepo_percent, 30), 
+  options = list(
+    scroll.X = TRUE,
+    scroll.Y = FALSE,
+    paging = TRUE,
+    pageLength = 10,
+    lengthMenu = c(10, 20, 30)
+  ),
+  rownames = FALSE,
+  caption = "Table 6 - Tokenized commit message with percentage, calculated based on each repo"
+) %>%
+formatStyle(
+  columns = 1:5,
+  border = "1px solid black"
+)
+```
+
+## {-}
+
 
 ## Below are interactive plots for Assignment 5 {.tabset}
 
